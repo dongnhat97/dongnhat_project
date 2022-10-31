@@ -3,12 +3,10 @@ package com.java.api.controller.common.authentication.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class ErrorResponseDto {
+@Setter
+public class LoginSuccess {
 
-    private String error_code;
-
-    private String message;
+    private String user_id;
 
 }
