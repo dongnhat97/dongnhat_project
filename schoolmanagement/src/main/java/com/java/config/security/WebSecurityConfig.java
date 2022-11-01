@@ -50,19 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public static final String[] AUTH_WHITELIST = {
-            // -- swagger ui
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/webjars/**",
-            "/**/swagger-ui.html",
-            "/api/v2/docs",
-            "/api/v1/authen/login",
             "/api/authentication/**"
     };
 
-    public static final String[] AUTH_FOR_GET_METHOD = { "/**/swagger-ui.html" };
+
 
     public static final String[] AUTH_FOR_POST_METHOD = {};
 
@@ -96,7 +87,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.GET, AUTH_FOR_GET_METHOD).permitAll()
                 .antMatchers(HttpMethod.POST, AUTH_FOR_POST_METHOD).permitAll()
                 .antMatchers(HttpMethod.PUT, AUTH_FOR_PUT_METHOD).permitAll()
                 .antMatchers(HttpMethod.POST, AUTH_FOR_LOGIN_METHOD).permitAll().anyRequest().authenticated().and()

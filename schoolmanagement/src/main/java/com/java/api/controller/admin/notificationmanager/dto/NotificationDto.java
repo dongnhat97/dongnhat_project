@@ -13,15 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/**
- * [OVERVIEW] NotificationDto
- *
- * @author: BAP(KhueHD)
- * @version: 1.0
- * @History [NUMBER] [VER] [DATE] [USER] [CONTENT]
- * -----------------------------------------
- * 001 1.0 2021/12/27 BAP(KhueHD) Create new
- */
+
 @Getter
 @Setter
 @RequiredArgsConstructor

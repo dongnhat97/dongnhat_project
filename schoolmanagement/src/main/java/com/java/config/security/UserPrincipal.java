@@ -32,8 +32,6 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String password;
 
-    private boolean tfaChecked;
-
     private List<Role> role;
 
     private CommonEnum.StatusEnum status;

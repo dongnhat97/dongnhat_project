@@ -64,7 +64,6 @@ public class JwtProvider {
         }
         //Build access token
         String jwt = Jwts.builder().setSubject(name)
-                .setClaims(buildClaims(principal))
                 .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
 
         //Build refresh token
@@ -81,33 +80,23 @@ public class JwtProvider {
         return accessToken;
     }
 
-    public String createTokenCharge(Authentication authentication, List<Integer> planId, Integer companyId) {
-        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        String name = String.valueOf(principal.getUserId());
-        //Build access token
-        String jwt = Jwts.builder().setSubject(name)
-                .setExpiration(new Date())
-                .setClaims(buildClaimsPayment(name, companyId, planId, new Date()))
-                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
-        return jwt;
-    }
 
-    /**
-     * Create token register
-     *
-     * @param email
-     * @return token
-     */
-    public String createTokenRegister(String email) {
-        //Build access token
-        long now = (new Date()).getTime();
-        long dateToMilliseconds = 86400000 ;
-        Date validity = new Date(now + dateToMilliseconds);
-        String jwt = Jwts.builder().setSubject(email)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
-        return jwt;
-    }
+//    /**
+//     * Create token register
+//     *
+//     * @param email
+//     * @return token
+//     */
+//    public String createTokenRegister(String email) {
+//        //Build access token
+//        long now = (new Date()).getTime();
+//        long dateToMilliseconds = 86400000 ;
+//        Date validity = new Date(now + dateToMilliseconds);
+//        String jwt = Jwts.builder().setSubject(email)
+//                .setExpiration(validity)
+//                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
+//        return jwt;
+//    }
 
 //    /**
 //     * Get subject from input token
@@ -156,36 +145,36 @@ public class JwtProvider {
         }
     }
 
-    public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
-    }
+//    public String getUserNameFromJwtToken(String token) {
+//        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+//    }
 
-    /**
-     * build Claims token payment
-     *
-     * @param principal User Principal
-     * @return
-     */
-    private Map<String, Object> buildClaimsPayment(String user_id, Integer company_id, List<Integer> plan_id, Date date) {
-        Map<String, Object> claims = new HashMap<String, Object>();
-        claims.put("user_id",user_id);
-        claims.put("company_id", company_id);
-        claims.put("plan_id", plan_id);
-        claims.put("date", date);
-        return claims;
-    }
+//    /**
+//     * build Claims token payment
+//     *
+//     * @param principal User Principal
+//     * @return
+//     */
+//    private Map<String, Object> buildClaimsPayment(String user_id, Integer company_id, List<Integer> plan_id, Date date) {
+//        Map<String, Object> claims = new HashMap<String, Object>();
+//        claims.put("user_id",user_id);
+//        claims.put("company_id", company_id);
+//        claims.put("plan_id", plan_id);
+//        claims.put("date", date);
+//        return claims;
+//    }
 
-    /**
-     * build Claims
-     *
-     * @param principal User Principal
-     * @return
-     */
-    private Map<String, Object> buildClaims(UserPrincipal principal) {
-        Map<String, Object> claims = new HashMap<String, Object>();
-        claims.put("userId", principal.getUserId());
-        claims.put("tfaChecked", principal.isTfaChecked());
-        return claims;
-    }
+//    /**
+//     * build Claims
+//     *
+//     * @param principal User Principal
+//     * @return
+//     */
+//    private Map<String, Object> buildClaims(UserPrincipal principal) {
+//        Map<String, Object> claims = new HashMap<String, Object>();
+//        claims.put("userId", principal.getUserId());
+//        claims.put("tfaChecked", principal.isTfaChecked());
+//        return claims;
+//    }
 
 }
