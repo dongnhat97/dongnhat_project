@@ -20,4 +20,13 @@ public class VerifyMail extends BaseEntity {
     @Column(nullable =  false)
     private LocalDateTime expireAt;
     private LocalDateTime confirmAt;
+
+    public VerifyMail( String token, String email, LocalDateTime createAt, LocalDateTime expireAt, LocalDateTime confirmAt) {
+
+        this.token = token;
+        this.email = email;
+        this.createAt = createAt;
+        this.expireAt = expireAt;
+        this.confirmAt = confirmAt;
+    }
 }

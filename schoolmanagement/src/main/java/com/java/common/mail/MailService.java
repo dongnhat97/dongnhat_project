@@ -12,21 +12,24 @@ import java.util.Optional;
 
 @Service
 public class MailService {
- @Autowired
-   private VerifyMailRepository verifyMailRepository;
- @Autowired
- private UserRepository userRepository;
+    @Autowired
+    private VerifyMailRepository verifyMailRepository;
+    @Autowired
+    private UserRepository userRepository;
 
- public void confirmMail(String token) throws NotFoundException {
-     Optional<VerifyMail> verifyMail = verifyMailRepository.findByToken(token);
-     if (!verifyMail.isPresent()){
-       throw new NotFoundException();
-     }
-     LocalDateTime expireAt = verifyMail.get().getExpireAt();
-     if (expireAt.isBefore(LocalDateTime.now())){
-         throw new IllegalStateException("Expire verify token");
-     }
+    public void confirmMail(String token) throws NotFoundException {
+        Optional<VerifyMail> verifyMailOptional = verifyMailRepository.findByToken(token);
+        if (!verifyMailOptional.isPresent()) {
+            throw new NotFoundException();
+        }
+        LocalDateTime expireAt = verifyMailOptional.get().getExpireAt();
+        if (expireAt.isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Expire verify token");
+        }
+        expireAt = LocalDateTime.now();
+        verifyMailOptional.get().setConfirmAt(expireAt);
+        userRepository.enableActiveAccount(verifyMailOptional.get().getEmail());
 
- }
+    }
 
 }

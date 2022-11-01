@@ -57,6 +57,9 @@ public class APIResponse<T> extends ResponseEntity {
     public static <T> APIResponse<T> errorStatus(int code, T body, HttpStatus httpStatus) {
         return new APIResponse<T>(code, body, httpStatus);
     }
+    public  static APIResponse successfulRegister(String content,HttpStatus httpStatus) {
+        return new APIResponse(content,httpStatus);
+    }
 
     @Getter
     @Setter
