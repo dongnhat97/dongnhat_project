@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Table(name = "teacher")
 public class Teacher implements Serializable {
 
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
     private static final long serialVersionUID = 1L;

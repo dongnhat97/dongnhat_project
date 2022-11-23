@@ -62,9 +62,9 @@ public class TeacherController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file ");
     }
 
-    @GetMapping("/product")
+    @GetMapping("/teacher")
     public List<Teacher> getAllProduct() {
-        return this.uploadTeacherService.getAllProducts();
+        return this.uploadTeacherService.getAllTeacher();
     }
 
 }

@@ -34,7 +34,7 @@ public class UploadTeacherService {
 
     }
 
-    public List<Teacher> getAllProducts() {
+    public List<Teacher> getAllTeacher() {
         return this.teacherRepository.findAll();
     }
     public static boolean checkExcelFormat(MultipartFile file) {
@@ -84,12 +84,9 @@ public class UploadTeacherService {
 
                     switch (cid) {
                         case 0:
-                            teacher.setId((int) cell.getNumericCellValue());
-                            break;
-                        case 1:
                             teacher.setName(cell.getStringCellValue());
                             break;
-                        case 2:
+                        case 1:
                             teacher.setAddress(cell.getStringCellValue());
                             break;
                         default:
