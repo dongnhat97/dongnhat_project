@@ -7,12 +7,12 @@ import com.java.common.constant.CommonConstant;
 import com.java.common.entity.LoginHistories;
 import com.java.common.entity.Role;
 import com.java.common.entity.User;
-import com.java.common.entity.VerifyMail;
-import com.java.common.mail.MailSenderImpl;
-import com.java.common.mail.MailService;
+//import com.java.common.entity.VerifyMail;
+//import com.java.common.mail.MailSenderImpl;
+//import com.java.common.mail.MailService;
 import com.java.common.repository.LoginHistoryRepository;
 import com.java.common.repository.UserRepository;
-import com.java.common.repository.VerifyMailRepository;
+//import com.java.common.repository.VerifyMailRepository;
 import com.java.common.response.APIErrorResponse;
 import com.java.common.response.APIResponse;
 import com.java.common.service.BaseService;
@@ -49,9 +49,9 @@ public class AuthenticationService extends BaseService {
     private final BaseUserDetailsService userDetailsService;
     private final LoginHistoryRepository loginHistoryRepository;
     private final PasswordEncoder passwordEncoder;
-    private final VerifyMailRepository verifyMailRepository;
-    private final MailSenderImpl mailSender;
-    private final MailService mailService;
+//    private final VerifyMailRepository verifyMailRepository;
+//    private final MailSenderImpl mailSender;
+//    private final MailService mailService;
 
 
     /**
@@ -96,10 +96,10 @@ public class AuthenticationService extends BaseService {
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ERROR_USER_NOT_FOUND,
                         APIConstants.NOT_FOUND_MESSAGE.replace(APIConstants.REPLACE_CHAR, APIConstants.USER))));
 
-        if (!new BCryptPasswordEncoder().matches(loginDto.getPassword(), optionalUser.get().getPassword())) {
-            throw new BadRequestException(BadRequestException.ERROR_AUTHENTICATION_FAILED_WRONG_EMAIL_OR_PASSWORD,
-                    APIConstants.ERROR_PASSWORD_WRONG, false);
-        }
+//        if (!new BCryptPasswordEncoder().matches(loginDto.getPassword(), optionalUser.get().getPassword())) {
+//            throw new BadRequestException(BadRequestException.ERROR_AUTHENTICATION_FAILED_WRONG_EMAIL_OR_PASSWORD,
+//                    APIConstants.ERROR_PASSWORD_WRONG, false);
+//        }
         if (optionalUser.get().getStatus() == CommonEnum.StatusEnum.DELETED) {
             storeLoginHistory(optionalUser.get(), request, StatusLoginEnum.Status.FAILED);
             throw new BadRequestException(BadRequestException.ERROR_USER_HAS_BEEN_DELETED,
@@ -114,9 +114,9 @@ public class AuthenticationService extends BaseService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(new UserPrincipal()
                 .create(optionalUser.get(), this.userDetailsService.getAuthorities(optionalUser.get())), null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        Boolean isRemember = loginDto.getIsRememberMe() == null ? false
-                : loginDto.getIsRememberMe() == false ? false : true;
-        AccessToken accessToken = this.jwtForAPIResponse(authentication, isRemember);
+//        Boolean isRemember = loginDto.getIsRememberMe() == null ? false
+//                : loginDto.getIsRememberMe() == false ? false : true;
+        AccessToken accessToken = this.jwtForAPIResponse(authentication, true);
         userAuthenticationDto.setAccessToken(accessToken.getToken());
         userAuthenticationDto.setTokenType(APIConstants.JWT_TOKEN_TYPE);
         userAuthenticationDto.setRefreshToken(accessToken.getRefreshToken());
@@ -129,35 +129,35 @@ public class AuthenticationService extends BaseService {
     }
 
 
-    public Object registerAccount(AccountDto accountDto) throws Exception {
-        User user = this.userRepository.findByUserName(accountDto.getName());
-        if (user != null) {
-            throw new IllegalStateException("username had already exist");
-        }
-        user = this.userRepository.findUserByEmail(accountDto.getEmail());
-        if (user != null) {
-            throw new IllegalStateException("email had already exist");
-        }
-        String encoder = passwordEncoder.encode(accountDto.getPassword());
-        accountDto.setPassword(encoder);
-        User newUser = new User();
-        BeanUtils.copyProperties(accountDto, newUser);
-        newUser.setStatus(CommonEnum.StatusEnum.DELETED);
-        userRepository.save(newUser);
-
-        String token = UUID.randomUUID().toString();
-        VerifyMail verifyMail = new VerifyMail(token, accountDto.getEmail(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
-        verifyMailRepository.save(verifyMail);
-        String link = "http://localhost:8080/api/authentication/confirm?token=" + token;
-        mailSender.buildEmail(link);
-        mailSender.send(accountDto.getEmail(), link);
-        return APIErrorResponse.createdStatus(CommonConstant.ERROR_NAMES.NG, null, null, HttpStatus.OK);
-
-    }
-
-    public Object confirmEmail(String token) throws NotFoundException {
-        mailService.confirmMail(token);
-        return APIResponse.successfulRegister("Congratulations, you have successfully registered", HttpStatus.OK);
-    }
+//    public Object registerAccount(AccountDto accountDto) throws Exception {
+//        User user = this.userRepository.findByUserName(accountDto.getName());
+//        if (user != null) {
+//            throw new IllegalStateException("username had already exist");
+//        }
+//        user = this.userRepository.findUserByEmail(accountDto.getEmail());
+//        if (user != null) {
+//            throw new IllegalStateException("email had already exist");
+//        }
+//        String encoder = passwordEncoder.encode(accountDto.getPassword());
+//        accountDto.setPassword(encoder);
+//        User newUser = new User();
+//        BeanUtils.copyProperties(accountDto, newUser);
+//        newUser.setStatus(CommonEnum.StatusEnum.DELETED);
+//        userRepository.save(newUser);
+//
+//        String token = UUID.randomUUID().toString();
+//        VerifyMail verifyMail = new VerifyMail(token, accountDto.getEmail(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
+//        verifyMailRepository.save(verifyMail);
+//        String link = "http://localhost:8080/api/authentication/confirm?token=" + token;
+//        mailSender.buildEmail(link);
+//        mailSender.send(accountDto.getEmail(), link);
+//        return APIErrorResponse.createdStatus(CommonConstant.ERROR_NAMES.NG, null, null, HttpStatus.OK);
+//
+//    }
+//
+//    public Object confirmEmail(String token) throws NotFoundException {
+//        mailService.confirmMail(token);
+//        return APIResponse.successfulRegister("Congratulations, you have successfully registered", HttpStatus.OK);
+//    }
 }
 

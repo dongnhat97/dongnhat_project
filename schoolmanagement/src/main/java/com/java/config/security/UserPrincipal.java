@@ -28,6 +28,7 @@ public class UserPrincipal implements UserDetails {
     private Integer userId;
 
     private String name;
+    private boolean tfaChecked;
 
     @JsonIgnore
     private String password;

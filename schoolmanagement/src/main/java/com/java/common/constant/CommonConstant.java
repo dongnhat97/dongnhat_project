@@ -178,6 +178,9 @@ public class CommonConstant {
          * Local date time yyyy/MM/dd HH:mm
          */
         public static final String YYYY_MM_DD_HH_MM_SPLASH = "yyyy/MM/dd HH:mm";
+
+        public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$";
+        public static final String TEST_PASSWORD = "^[0-8].{7,20}$";
     }
     /**
      * Entity status

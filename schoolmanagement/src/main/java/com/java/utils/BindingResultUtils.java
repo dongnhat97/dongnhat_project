@@ -23,7 +23,7 @@ public class BindingResultUtils {
         String result;
         String code = bindingResult.getAllErrors().get(0).getCode();
         String field = bindingResult.getFieldError().getField();
-        mapErrors.put("code", code);
+//        mapErrors.put("code", code);
         if (code.equals(CommonConstant.ERROR_NAMES.PASSWORD_CONSTRAINT)) {
             errorCode = CommonConstant.ERROR_CODES.E_002;
             message = messageService.buildMessages(errorCode);

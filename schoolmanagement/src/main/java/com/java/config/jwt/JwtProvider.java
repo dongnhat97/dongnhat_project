@@ -24,9 +24,9 @@ public class JwtProvider {
     public boolean validateJwtToken(String authToken) throws ServletException {
         try {
             // dont check expired
-//            if(isTokenExpired(authToken)) {
-//                throw new ServletException("Expired JWT token");
-//            }
+            if(isTokenExpired(authToken)) {
+                throw new ServletException("Expired JWT token");
+            }
             Jwts.parser().setSigningKey(this.jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
@@ -54,7 +54,7 @@ public class JwtProvider {
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
         String name = String.valueOf(principal.getUserId());
         long now = (new Date()).getTime();
-        long dateToMilliseconds = 60*60*1000;
+        long dateToMilliseconds = 60*60*3000;
         Date validity;
         Date refreshTokenExpiration = new Date(now + TokenEnum.REFRESH_TOKEN_EXPIRED.getValue() * dateToMilliseconds);
         if (rememberMe) {
@@ -63,7 +63,11 @@ public class JwtProvider {
             validity = new Date(now + TokenEnum.TOKEN_JWT_EXPIRED.getValue() * dateToMilliseconds);
         }
         //Build access token
+//        String jwt = Jwts.builder().setSubject(name)
+//                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
         String jwt = Jwts.builder().setSubject(name)
+                .setClaims(buildClaims(principal))
+                .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
 
         //Build refresh token
@@ -81,36 +85,36 @@ public class JwtProvider {
     }
 
 
-//    /**
-//     * Create token register
-//     *
-//     * @param email
-//     * @return token
-//     */
-//    public String createTokenRegister(String email) {
-//        //Build access token
-//        long now = (new Date()).getTime();
-//        long dateToMilliseconds = 86400000 ;
-//        Date validity = new Date(now + dateToMilliseconds);
-//        String jwt = Jwts.builder().setSubject(email)
-//                .setExpiration(validity)
-//                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
-//        return jwt;
-//    }
+    /**
+     * Create token register
+     *
+     * @param email
+     * @return token
+     */
+    public String createTokenRegister(String email) {
+        //Build access token
+        long now = (new Date()).getTime();
+        long dateToMilliseconds = 86400000 ;
+        Date validity = new Date(now + dateToMilliseconds);
+        String jwt = Jwts.builder().setSubject(email)
+                .setExpiration(validity)
+                .signWith(SignatureAlgorithm.HS512, this.jwtSecret).compact();
+        return jwt;
+    }
 
-//    /**
-//     * Get subject from input token
-//     *
-//     * @param token access token
-//     * @return subject
-//     */
-//    public Integer getSubjectFromToken(String token) {
-//        return Integer.valueOf(Jwts.parser()
-//                .setSigningKey(this.jwtSecret)
-//                .parseClaimsJws(token)
-//                .getBody()
-//                .getSubject());
-//    }
+    /**
+     * Get subject from input token
+     *
+     * @param token access token
+     * @return subject
+     */
+    public Integer getSubjectFromToken(String token) {
+        return Integer.valueOf(Jwts.parser()
+                .setSigningKey(this.jwtSecret)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject());
+    }
 
     /**
      * Get Claim info from access token value.
@@ -145,9 +149,9 @@ public class JwtProvider {
         }
     }
 
-//    public String getUserNameFromJwtToken(String token) {
-//        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
-//    }
+    public String getUserNameFromJwtToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
 
 //    /**
 //     * build Claims token payment
@@ -164,17 +168,17 @@ public class JwtProvider {
 //        return claims;
 //    }
 
-//    /**
-//     * build Claims
-//     *
-//     * @param principal User Principal
-//     * @return
-//     */
-//    private Map<String, Object> buildClaims(UserPrincipal principal) {
-//        Map<String, Object> claims = new HashMap<String, Object>();
-//        claims.put("userId", principal.getUserId());
-//        claims.put("tfaChecked", principal.isTfaChecked());
-//        return claims;
-//    }
+    /**
+     * build Claims
+     *
+     * @param principal User Principal
+     * @return
+     */
+    private Map<String, Object> buildClaims(UserPrincipal principal) {
+        Map<String, Object> claims = new HashMap<String, Object>();
+        claims.put("userId", principal.getUserId());
+        claims.put("tfaChecked", principal.isTfaChecked());
+        return claims;
+    }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Integer> {
-    @Query(value = "select std.id as id ,std.name as name,std.date_of_birth as datOfBirth,std.address as address,std.classroom_id as classroomId,student_course.course_id as courseId,student_course.point as point \n" +
+    @Query(value = "select std.id as id ,std.name as name,std.date_of_birth as dateOfBirth,std.address as address,std.classroom_id as classroomId,student_course.course_id as courseId,student_course.point as point \n" +
             "from student std \n" +
             "inner join classroom \n" +
             "on std.classroom_id = classroom.id \n" +

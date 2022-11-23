@@ -22,7 +22,6 @@ public class StudentService {
 
     public Page<StudentResponse> getAllStudent(Pageable pageable, Integer courseId, Integer limit, String name, Integer classroomId) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),limit);
-        List<StudentResponse> studentNew = new ArrayList<>();
         Page<IStudentResponse> studentPage = studentRepository.getAllStudent(courseId, "%"+ name+ "%", classroomId, pageRequest);
         //        studentList.stream().map(i -> {
 //            StudentResponse studentResponse = new StudentResponse();

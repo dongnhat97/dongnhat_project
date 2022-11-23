@@ -34,17 +34,17 @@ public class AuthenticationController {
         return APIResponse.okStatus(authenticationService.loginService(loginDto,request));
 
     }
-    @PostMapping("/register")
-    public Object registerAccount(@Valid @RequestBody AccountDto accountDto,BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
-            Map<String,String>  mapError = bindingResultUtils.errorMapBindingResultUtils(bindingResult);
-            return APIErrorResponse.errorStatus(CommonConstant.ERROR_NAMES.NG,null,mapError,HttpStatus.BAD_REQUEST);
-        }
-       return APIResponse.okStatus(authenticationService.registerAccount(accountDto));
-    }
-
-    @PostMapping("/confirm")
-    public Object confirmEmail(@RequestParam String token) throws NotFoundException {
-        return APIResponse.okStatus(authenticationService.confirmEmail(token));
-    }
+//    @PostMapping("/register")
+//    public Object registerAccount(@Valid @RequestBody AccountDto accountDto,BindingResult bindingResult) throws Exception {
+//        if (bindingResult.hasErrors()) {
+//            Map<String,String>  mapError = bindingResultUtils.errorMapBindingResultUtils(bindingResult);
+//            return APIErrorResponse.errorStatus(CommonConstant.ERROR_NAMES.NG,null,mapError,HttpStatus.BAD_REQUEST);
+//        }
+//       return APIResponse.okStatus(authenticationService.registerAccount(accountDto));
+//    }
+//
+//    @PostMapping("/confirm")
+//    public Object confirmEmail(@RequestParam String token) throws NotFoundException {
+//        return APIResponse.okStatus(authenticationService.confirmEmail(token));
+//    }
 }

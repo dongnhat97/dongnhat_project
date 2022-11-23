@@ -13,7 +13,7 @@ import java.sql.Date;
 public class Student extends BaseEntity {
     @Column(name = "name")
     private String name;
-    @Column(name = "dateOfBirth")
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
     @Column(name = "address")
     private String address;
