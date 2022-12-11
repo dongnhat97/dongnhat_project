@@ -2,9 +2,9 @@ package com.java.teacher.api.teachermanager;
 
 //import com.java.teacher.entity.Teacher;
 
-import com.java.common.response.APIResponse;
+import com.java.common.constant.CommonConstant;
 import com.java.teacher.api.file.UploadTeacherService;
-import com.java.teacher.api.file.UserExcelExporter;
+import com.java.teacher.api.file.TeacherExcelExporter;
 import com.java.teacher.entity.Teacher;
 import com.java.teacher.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +34,16 @@ public class TeacherController {
     @GetMapping("/export/excel")
     public void exportToExcel(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        DateFormat dateFormatter = new SimpleDateFormat(CommonConstant.REGEX_PATTERN.REX_DATE_TIME_YYYY_MM_DD_HH_MM_HYPHEN);
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+        String headerValue = "attachment; filename=teacher_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
         List<Teacher> listUsers = teacherRepository.findAll();
 
-        UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
+        TeacherExcelExporter excelExporter = new TeacherExcelExporter(listUsers);
 
         excelExporter.export(response);
     }

@@ -37,6 +37,7 @@ public class UploadTeacherService {
     public List<Teacher> getAllTeacher() {
         return this.teacherRepository.findAll();
     }
+
     public static boolean checkExcelFormat(MultipartFile file) {
 
         String contentType = file.getContentType();
@@ -50,7 +51,7 @@ public class UploadTeacherService {
     }
 
 
-    //convert excel to list of products
+    //convert excel to list of teacher
 
     public static List<Teacher> convertExcelToListOfTeacher(InputStream is) {
         List<Teacher> list = new ArrayList<>();

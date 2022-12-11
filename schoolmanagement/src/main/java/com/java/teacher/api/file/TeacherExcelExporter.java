@@ -16,13 +16,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
-public class UserExcelExporter {
+public class TeacherExcelExporter {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private List<Teacher> listUsers;
 
 
-    public UserExcelExporter(List<Teacher> listUsers) {
+    public TeacherExcelExporter(List<Teacher> listUsers) {
         this.listUsers = listUsers;
         workbook = new XSSFWorkbook();
     }
