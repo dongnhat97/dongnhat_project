@@ -6,6 +6,8 @@ public class GitDemo {
     private String text2;
     private String text4;
     private String text5;
+    private String text6;
     private String text3;
+    private String text7;
 
 }
