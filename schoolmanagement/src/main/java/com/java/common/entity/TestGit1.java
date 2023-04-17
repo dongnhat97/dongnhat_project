@@ -4,4 +4,5 @@ public class TestGit1 {
     private String text1;
     private String text2;
     private String text5;
+    private String text6;
 }
