@@ -1,20 +1,12 @@
 package com.java.api.controller.common.authentication;
 
-import com.java.api.controller.common.authentication.dto.AccountDto;
 import com.java.api.controller.common.authentication.dto.LoginDto;
 import com.java.api.controller.common.authentication.dto.UserAuthenticationDto;
-import com.java.common.constant.CommonConstant;
 import com.java.common.entity.LoginHistories;
 import com.java.common.entity.Role;
 import com.java.common.entity.User;
-//import com.java.common.entity.VerifyMail;
-//import com.java.common.mail.MailSenderImpl;
-//import com.java.common.mail.MailService;
 import com.java.common.repository.LoginHistoryRepository;
 import com.java.common.repository.UserRepository;
-//import com.java.common.repository.VerifyMailRepository;
-import com.java.common.response.APIErrorResponse;
-import com.java.common.response.APIResponse;
 import com.java.common.service.BaseService;
 import com.java.common.service.MessageService;
 import com.java.config.jwt.AccessToken;
@@ -26,20 +18,21 @@ import com.java.exception.BadRequestException;
 import com.java.exception.NotFoundException;
 import com.java.utils.constrains.APIConstants;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
+
+//import com.java.common.entity.VerifyMail;
+//import com.java.common.mail.MailSenderImpl;
+//import com.java.common.mail.MailService;
+//import com.java.common.repository.VerifyMailRepository;
 
 @Service
 @RequiredArgsConstructor
