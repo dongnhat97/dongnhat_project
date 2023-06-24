@@ -1,6 +1,8 @@
 package com.java.teacher.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.io.Serializable;
 @Table(name = "book")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +28,7 @@ public class Book implements Serializable {
     private Double price;
     @Column(name = "total_money")
     private Double totalMoney;
+    @Column(name = "teacher_id")
+    private Integer teacherId;
 
-    public Book(Integer id, String title, Integer quantity, Double price) {
-        this.id = id;
-        this.title = title;
-        this.quantity = quantity;
-        this.price = price;
-    }
 }

@@ -19,8 +19,8 @@ public class JavaApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("this is testing");
     }
-    @Bean
-    JsonMessageConverter converter(){
-        return new JsonMessageConverter();
-    }
+//    @Bean
+//    JsonMessageConverter converter(){
+//        return new JsonMessageConverter();
+//    }
 }

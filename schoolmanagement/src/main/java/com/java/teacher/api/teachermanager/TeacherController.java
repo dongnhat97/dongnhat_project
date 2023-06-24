@@ -5,7 +5,10 @@ package com.java.teacher.api.teachermanager;
 import com.java.common.constant.CommonConstant;
 import com.java.teacher.api.file.UploadTeacherService;
 import com.java.teacher.api.file.TeacherExcelExporter;
+import com.java.teacher.entity.DownloadRequest;
 import com.java.teacher.entity.Teacher;
+import com.java.teacher.repository.BookRepository;
+import com.java.teacher.repository.ClassRoomRepository;
 import com.java.teacher.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,11 +31,16 @@ public class TeacherController {
     private TeacherRepository teacherRepository;
     @Autowired
     UploadTeacherService uploadTeacherService;
+    @Autowired
+    private BookRepository bookRepository;
+    @Autowired
+    private ClassRoomRepository classRoomRepository;
+
 
 
 
     @GetMapping("/export/excel")
-    public void exportToExcel(HttpServletResponse response) throws IOException {
+    public void exportToExcel(HttpServletResponse response, @RequestBody DownloadRequest downloadRequest) throws IOException {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat(CommonConstant.REGEX_PATTERN.REX_DATE_TIME_YYYY_MM_DD_HH_MM_HYPHEN);
         String currentDateTime = dateFormatter.format(new Date());
@@ -43,9 +51,9 @@ public class TeacherController {
 
         List<Teacher> listUsers = teacherRepository.findAll();
 
-        TeacherExcelExporter excelExporter = new TeacherExcelExporter(listUsers);
+        TeacherExcelExporter excelExporter = new TeacherExcelExporter(listUsers,bookRepository,classRoomRepository);
 
-        excelExporter.export(response);
+        excelExporter.export(response,downloadRequest);
     }
 
     @PostMapping("/upload")

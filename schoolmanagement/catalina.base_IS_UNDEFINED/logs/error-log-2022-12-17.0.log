@@ -1,0 +1,5 @@
+22:01:30.365 [restartedMain] INFO  com.java.JavaApplication - Starting JavaApplication using Java 11 on DESKTOP-0Q5NETM with PID 3168 (D:\MyProject\dongnhat_project\schoolmanagement\target\classes started by dell in D:\MyProject\dongnhat_project\schoolmanagement)
+22:01:30.371 [restartedMain] DEBUG com.java.JavaApplication - Running with Spring Boot v2.4.4, Spring v5.3.5
+22:01:30.372 [restartedMain] INFO  com.java.JavaApplication - No active profile set, falling back to default profiles: default
+22:01:39.971 [restartedMain] DEBUG c.java.config.jwt.JwtAuthTokenFilter - Filter 'authenticationJwtTokenFilter' configured for use
+22:01:41.813 [restartedMain] INFO  com.java.JavaApplication - Started JavaApplication in 12.936 seconds (JVM running for 17.64)
